@@ -55,6 +55,36 @@ namespace Labo1Oefening1.Controllers
             _wines.Add(wine);
             return new OkObjectResult(wine);
         }
-            
+
+        [HttpDelete]
+        [Route("wine/{wineId}")]
+        public ActionResult<Wine> DeleteWine(int wineId){
+            /*
+            Wine wine = _wines.Find(delegate(WineController w){
+                return w.WineId == wineId;
+            });*/
+
+            Wine wine= _wines.Find(w => w.WineId == wineId);
+
+            if (wine != null) {
+                _wines.Remove(wine);
+                return new OkObjectResult(wine);
+            } else {
+                return new NotFoundResult();
+            }
+        }
+
+        [HttpPut]
+        [Route("wine")]
+        public ActionResult<Wine> UpdateWine(Wine wine)
+        {
+            Wine existingWine = _wines.Find(w => w.WineId == wine.WineId);
+            if(existingWine != null)
+            {
+                _wines.Remove(existingWine);
+                _wines.Add(wine);
+            }
+            return new OkObjectResult(wine);
+        }
     }
 }
