@@ -44,6 +44,17 @@ namespace Labo1Oefening1.Controllers
                 return new OkObjectResult(wine);
             }
         }
+
+        [HttpPost]
+        [Route("wine")]
+        public ActionResult<Wine> AddWines(Wine wine){
+            if (wine == null){
+                return new BadRequestResult();
+            }
+            wine.WineId =_wines.Count + 1;
+            _wines.Add(wine);
+            return new OkObjectResult(wine);
+        }
             
     }
 }
